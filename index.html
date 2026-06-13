@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Imbi ❤️</title><!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head><body class="overflow-hidden"><!-- MUSIK --><audio id="bgMusic" loop>
+    <source src="assets/bgmusic.mp3" type="audio/mpeg">
+</audio><button id="muteBtn">
+    🔊
+</button><!-- HUJAN BUNGA --><div id="flowerRain"></div><!-- ================================================= --><!-- SCENE 1 : KADO --><!-- ================================================= --><section id="giftScene" class="scene active"><div class="text-center">
+
+    <h1 class="gift-title">
+        Ada sesuatu untuk Imbi ❤️
+    </h1>
+
+    <p class="gift-subtitle">
+        Klik kadonya ya sayang
+    </p>
+
+    <div id="giftBox" class="gift-box">
+        🎁
+    </div>
+
+</div>
+
+</section><!-- ================================================= --><!-- SCENE 2 : PIN --><!-- ================================================= --><section id="pinScene" class="scene hidden"><div class="pin-container">
+
+    <h2 class="pin-title">
+        Hayo kodenya apa ya 🤭
+    </h2>
+
+    <input
+        id="pinInput"
+        type="password"
+        maxlength="6"
+        placeholder="______"
+        class="pin-input"
+    >
+
+    <button id="checkPinBtn" class="pink-btn">
+        Masuk
+    </button>
+
+    <p id="pinMessage"></p>
+
+</div>
+
+</section><!-- ================================================= --><!-- SCENE 3 : ORBIT --><!-- ================================================= --><section id="orbitScene" class="scene hidden"><div class="orbit-wrapper">
+
+    <p class="memory-label">
+        MEMORI DnA
+    </p>
+
+    <h1 class="memory-title">
+        Kenangan Dewa n Imbi
+    </h1>
+
+    <p class="memory-subtitle">
+        Pencet setiap kenangan nya satu persatu ya sayang ❤️
+    </p>
+
+    <!-- INTI HATI -->
+
+    <div id="heartCore">
+
+        <div class="heart-glow"></div>
+
+        <div class="heart-content">
+
+            <h2>❤️</h2>
+
+            <p>
+                Inti Hati
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ORBIT ITEMS -->
+
+    <div class="orbit orbit1">
+        <button class="memory-item" data-target="photo1">
+            📸 Foto 1
+        </button>
+    </div>
+
+    <div class="orbit orbit2">
+        <button class="memory-item" data-target="photo2">
+            📸 Foto 2
+        </button>
+    </div>
+
+    <div class="orbit orbit3">
+        <button class="memory-item" data-target="photo3">
+            📸 Foto 3
+        </button>
+    </div>
+
+    <div class="orbit orbit4">
+        <button class="memory-item" data-target="photo4">
+            📸 Foto 4
+        </button>
+    </div>
+
+    <div class="orbit orbit5">
+        <button class="memory-item" data-target="photo5">
+            📸 Foto 5
+        </button>
+    </div>
+
+    <div class="orbit orbit6">
+        <button class="memory-item" data-target="letter">
+            💌 Surat
+        </button>
+    </div>
+
+    <div class="orbit orbit7">
+        <button class="memory-item" data-target="song">
+            🎵 Lagu Kita
+        </button>
+    </div>
+
+    <div class="orbit orbit8">
+        <button class="memory-item" data-target="favorite">
+            🌸 Favorit
+        </button>
+    </div>
+
+</div>
+
+</section><!-- ================================================= --><!-- MODAL --><!-- ================================================= --><div id="modal" class="hidden"><div class="modal-content">
+
+    <button id="closeModal" class="close-btn">
+        ✖
+    </button>
+
+    <div id="modalBody"></div>
+
+</div>
+
+</div><!-- ================================================= --><!-- BOUQUET --><!-- ================================================= --><section id="bouquetScene" class="scene hidden"><div class="bouquet-container">
+
+    <div class="bouquet-flowers">
+        🌸 🌷 🌹 🌸 🌷 🌹 🌸
+    </div>
+
+    <h1 class="bouquet-title">
+        Thank You For Staying
+    </h1>
+
+    <p class="bouquet-subtitle">
+        Terimakasih karena tetap ada sayang ❤️
+    </p>
+
+    <button id="loveBtn" class="pink-btn">
+        Aku Sayang Kamu ❤️
+    </button>
+
+    <h2 id="foreverText" class="hidden">
+        Forever Us ❤️
+    </h2>
+
+</div>
+
+</section><!-- ================================================= --><!-- TEMPLATE KENANGAN --><!-- ================================================= --><div id="memoryTemplates" class="hidden"><template id="photo1">
+
+    <img src="assets/foto1.jpg" class="memory-photo">
+
+    <p>
+        Kalo kamu meluk atau ngelakuin sesuatu ke bunga yang aku kasih
+        aku ngerasa kaya aku yang dipeluk deh wkwkwkwk.
+        Bunga kamu wangii bangett makasih yaa udah ngasih aku segala hwhe.
+        Kamu effort bangett dehh aku sukakkk ❤️
+    </p>
+
+</template>
+
+<template id="photo2">
+
+    <img src="assets/foto2.jpg" class="memory-photo">
+
+    <p>
+        Liat gaa yang kemarin kita fotbar?
+        Pertama kali loh itu kita wkwkwkwk.
+        Kenapa aku nembak nya pas akhir yaa wkwkwk.
+        Kangenn dehh ❤️
+    </p>
+
+</template>
+
+<template id="photo3">
+
+    <img src="assets/foto3.jpg" class="memory-photo">
+
+    <p>
+        Ini foto kamu yang paling LUCUKKK GEMESHH BANGETT.
+        Aku salting pas kamu kirim ke akuu tauu gasiee ❤️
+    </p>
+
+</template>
+
+<template id="photo4">
+
+    <img src="assets/foto4.jpg" class="memory-photo">
+
+    <p>
+        Inget gaa kejadian aku nembak kamu?
+        Makasihh yakkk semoga kita sama sama teruss ❤️
+    </p>
+
+</template>
+
+<template id="photo5">
+
+    <img src="assets/foto5.jpg" class="memory-photo">
+
+    <p>
+        Liatt seng anak anak kita nungguin lohh dirumahh.
+        Udah punya 5 anak ajaa yaa 🤣❤️
+    </p>
+
+</template>
+
+<template id="letter">
+
+    <h2>💌 Untuk Imbi Sayang</h2>
+
+    <p>
+        Halo sayang.
+        Kamu jangan ngambek ya sama aku?
+        Wkwkwkwk capek tauu kalo kamu ngambek.
+        Ngambek nya jangan lama lama ya.
+        Maapin aku ya kadang kadang aku bikin kamu cemburu.
+        Aku pasti bakal kangen banget sama kamu seng disono.
+        Kamu juga disana sehat sehat yaa.
+        See u enjoy yaa seng ❤️
+    </p>
+
+</template>
+
+<template id="song">
+
+    <h2>🎵 Akad - Payung Teduh</h2>
+
+    <p>
+        Ini lagu kebangsaan kitaa ya seng ❤️
+    </p>
+
+    <a
+        href="https://open.spotify.com/"
+        target="_blank"
+        class="spotify-btn"
+    >
+        Buka Spotify
+    </a>
+
+</template>
+
+</div><script src="script.js"></script></body>
+</html>
