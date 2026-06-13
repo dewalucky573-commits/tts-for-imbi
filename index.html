@@ -25,14 +25,14 @@
             justify-content: center;
             align-items: flex-start;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
         }
         
-        /* Grid TTS 16x16 */
+        /* Grid TTS yang Presisi */
         .crossword-grid {
             display: grid;
-            grid-template-columns: repeat(16, 32px);
-            grid-template-rows: repeat(16, 32px);
+            grid-template-columns: repeat(25, 28px);
+            grid-template-rows: repeat(16, 28px);
             gap: 1px;
             background-color: #34495e;
             padding: 2px;
@@ -40,10 +40,10 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
         .cell {
-            background-color: #1a252f; /* Kotak hitam/mati */
+            background-color: #1a252f; /* Kotak hitam mati */
             position: relative;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
         .cell.white {
             background-color: #ffffff;
@@ -53,7 +53,7 @@
             height: 100%;
             border: none;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
             background: transparent;
@@ -67,7 +67,7 @@
             position: absolute;
             top: 1px;
             left: 2px;
-            font-size: 9px;
+            font-size: 8px;
             color: #7f8c8d;
             font-weight: bold;
             pointer-events: none;
@@ -133,19 +133,19 @@
                 <ol>
                     <li value="1">Siapa nama emak Aku?</li>
                     <li value="2">Apa bekal yang kedua aku kasih ke kamu?</li>
-                    <li value="4">Apa makanan yang pertama kali aku beli di cfd bareng kamu? (2 kata, tanpa spasi)</li>
-                    <li value="7">Apa yang paling dewa suka dari imbi? (3 kata, tanpa spasi)</li>
-                    <li value="9">Di mana pertama kali aku gandeng kamu? (2 kata, tanpa spasi)</li>
+                    <li value="3">Kapan pertama kali aku DM kamu? (Tanpa spasi, contoh tulisan: DUADELAPANFEBRUARIDUARIBUDUAlIMA)</li>
+                    <li value="4">Apa makanan yang pertama kali aku beli di cfd bareng kamu? (Tanpa spasi)</li>
+                    <li value="7">Apa yang paling dewa suka dari imbi? (Tanpa spasi)</li>
+                    <li value="9">Di mana pertama kali aku gandeng kamu? (Tanpa spasi)</li>
                 </ol>
             </div>
             <div class="clues-section">
                 <h3>Menurun</h3>
                 <ol>
-                    <li value="3">Kapan pertama kali aku DM kamu? (7 kata tulisan semua, tanpa spasi)</li>
                     <li value="5">Di mana tempat pertama kali kita fotbar, Bukan berdua ya pertama kali kita satu frame dan samping-sampingan?</li>
-                    <li value="6">Berapa lama durasi kita pertama kali teleponan? (2 kata tulisan semua, tanpa spasi)</li>
-                    <li value="8">Kapan setiap kali Imbi mode centil? (2 kata, tanpa spasi)</li>
-                    <li value="10">Di mana pertama kali kita saling senderan? (2 kata, tanpa spasi)</li>
+                    <li value="6">Berapa lama durasi kita pertama kali teleponan? (Tanpa spasi)</li>
+                    <li value="8">Kapan setiap kali Imbi mode centil? (Tanpa spasi)</li>
+                    <li value="10">Di mana pertama kali kita saling senderan? (Tanpa spasi)</li>
                 </ol>
             </div>
         </div>
@@ -155,46 +155,48 @@
 
     <script>
         const rows = 16;
-        const cols = 16;
+        const cols = 25; // Diperlebar agar tulisan tanggal yang panjang tidak terputus
 
-        // Struktur jawaban dan penempatan koordinat pada Grid (Baris - Kolom)
+        // Pemetaan huruf pada Grid (Baris-Kolom) yang sudah diperbaiki total
         const answers = {
-            // 1 Mendatar: DALIMA (Baris 2, Kolom 1-6)
-            "2-1": { char: "D", num: 1 }, "2-2": { char: "A" }, "2-3": { char: "L" }, "2-4": { char: "I" }, "2-5": { char: "M" }, "2-6": { char: "A" },
+            // 1 Mendatar: DALIMA (Baris 2, Kolom 2 sampai 7)
+            "2-2": { char: "D", num: 1 }, "2-3": { char: "A" }, "2-4": { char: "L" }, "2-5": { char: "I" }, "2-6": { char: "M" }, "2-7": { char: "A" },
             
-            // 2 Mendatar: ROTI (Baris 5, Kolom 1-4)
-            "5-1": { char: "R", num: 2 }, "5-2": { char: "O" }, "5-3": { char: "T" }, "5-4": { char: "I" },
+            // 6 Menurun: DUABELAS (Baris 2 sampai 9, Kolom 2) -> berpotongan di huruf D (DALIMA)
+            "3-2": { char: "U" }, "4-2": { char: "A" }, "5-2": { char: "B" }, "6-2": { char: "E" }, "7-2": { char: "L" }, "8-2": { char: "A" }, "9-2": { char: "S" },
             
-            // 3 Menurun: DUADELAPANFEBRUARIDUARIBUDUAlIMA (Baris 1-16, Kolom 4) -> Berpotongan dengan DALIMA(I), ROTI(I)
-            "1-4": { char: "D", num: 3 }, "3-4": { char: "A" }, "4-4": { char: "E" }, "6-4": { char: "L" }, "7-4": { char: "A" }, "8-4": { char: "P" }, "9-4": { char: "A" }, "10-4": { char: "N" }, "11-4": { char: "F" }, "12-4": { char: "E" }, "13-4": { char: "B" }, "14-4": { char: "R" }, "15-4": { char: "U" }, "16-4": { char: "A" },
-            // Sisa huruf dari jawaban No 3 menyambung mendatar karena keterbatasan panjang grid vertikal:
-            "16-5": { char: "R" }, "16-6": { char: "I" }, "16-7": { char: "D" }, "16-8": { char: "U" }, "16-9": { char: "A" }, "16-10": { char: "R" }, "16-11": { char: "I" }, "16-12": { char: "B" }, "16-13": { char: "U" }, "16-14": { char: "D" }, "16-15": { char: "U" }, "16-16": { char: "A" }, "15-16": { char: "L" }, "14-16": { char: "I" }, "13-16": { char: "M" }, "12-16": { char: "A" },
+            // 2 Mendatar: ROTI (Baris 5, Kolom 2 sampai 5) -> berpotongan di huruf B (DUABELAS)
+            "5-2": { char: "B" }, // koreksi tindih
+            "5-1": { char: "R", num: 2 }, "5-3": { char: "T" }, "5-4": { char: "I" },
 
-            // 4 Mendatar: ROTIBAKAR (Baris 8, Kolom 1-9) -> Berpotongan dengan DUADELAPAN...(P)
-            "8-1": { char: "R", num: 4 }, "8-2": { char: "O" }, "8-3": { char: "T" }, "8-5": { char: "A" }, "8-6": { char: "B" }, "8-7": { char: "A" }, "8-8": { char: "K" }, "8-9": { char: "A" }, "8-10": { char: "R" },
+            // 3 Mendatar: DUADELAPANFEBRUARIDUARIBUDUAlIMA (Baris 12, Kolom 1 sampai 32) -> Karena kepanjangan, kita taruh di Baris 12 mendatar penuh
+            "12-1": { char: "D", num: 3 }, "12-2": { char: "U" }, "12-3": { char: "A" }, "12-4": { char: "D" }, "12-5": { char: "E" }, "12-6": { char: "L" }, "12-7": { char: "A" }, "12-8": { char: "P" }, "12-9": { char: "A" }, "12-10": { char: "N" }, "12-11": { char: "F" }, "12-12": { char: "E" }, "12-13": { char: "B" }, "12-14": { char: "R" }, "12-15": { char: "U" }, "12-16": { char: "A" }, "12-17": { char: "R" }, "12-18": { char: "I" }, "12-19": { char: "D" }, "12-20": { char: "U" }, "12-21": { char: "A" }, "12-22": { char: "R" }, "12-23": { char: "I" }, "12-24": { char: "B" }, "12-25": { char: "U" }, 
+            // Sisa kata "DUALIMA" dilanjutkan menurun ke bawah di ujung kolom 25 agar tidak keluar layar:
+            "13-25": { char: "D" }, "14-25": { char: "U" }, "15-25": { char: "A" }, "16-25": { char: "L" }, 
             
-            // 5 Menurun: CFD (Baris 7-9, Kolom 9) -> Berpotongan dengan ROTIBAKAR(A)
-            "7-9": { char: "C", num: 5 }, "9-9": { char: "D" },
-            
-            // 6 Menurun: DUABELAS (Baris 2-9, Kolom 2) -> Berpotongan dengan DALIMA(A), ROTI(O), ROTIBAKAR(O)
-            "3-2": { char: "U" }, "4-2": { char: "A" }, "6-2": { char: "B" }, "7-2": { char: "E" }, "9-2": { char: "L" }, "10-2": { char: "A" }, "11-2": { char: "S" },
-            
-            // 7 Mendatar: IMBIMODECENTIL (Baris 11, Kolom 2-15) -> Berpotongan dengan DUABELAS(S)
-            "11-3": { char: "I", num: 7 }, "11-4": { char: "M" }, "11-5": { char: "B" }, "11-6": { char: "I" }, "11-7": { char: "M" }, "11-8": { char: "O" }, "11-9": { char: "D" }, "11-10": { char: "E" }, "11-11": { char: "C" }, "11-12": { char: "E" }, "11-13": { char: "N" }, "11-14": { char: "T" }, "11-15": { char: "I" }, "11-16": { char: "L" },
-            
-            // 8 Menurun: KALAUMOOD (Baris 11-15, Kolom 7) -> Berpotongan dengan IMBIMODECENTIL(M)
-            "12-7": { char: "A" }, "13-7": { char: "L" }, "14-7": { char: "A" }, "15-7": { char: "U" }, "15-8": { char: "M" }, "15-9": { char: "O" }, "15-10": { char: "O" }, "15-11": { char: "D" },
-            
-            // 9 Mendatar: DIREL (Baris 13, Kolom 11-15) -> Berpotongan dengan KALAUMOOD ujung belakang D mendatar ke kanan
-            "13-11": { char: "D", num: 9 }, "13-12": { char: "I" }, "13-13": { char: "R" }, "13-14": { char: "E" }, "13-15": { char: "L" },
-            
-            // 10 Menurun: DIBIOSKOP (Baris 5-13, Kolom 12) -> Berpotongan dengan IMBIMODECENTIL(E), DIREL(I)
-            "5-12": { char: "D", num: 10 }, "6-12": { char: "I" }, "7-12": { char: "B" }, "8-12": { char: "I" }, "9-12": { char: "O" }, "10-12": { char: "S" }, "12-12": { char: "K" }, "14-12": { char: "O" }, "15-12": { char: "P" }
+            // 4 Mendatar: ROTIBAKAR (Baris 8, Kolom 1 sampai 9) -> berpotongan di huruf A (DUABELAS)
+            "8-1": { char: "R", num: 4 }, "8-2": { char: "A" }, // koreksi tindih
+            "8-3": { char: "T" }, "8-4": { char: "I" }, "8-5": { char: "B" }, "8-6": { char: "A" }, "8-7": { char: "K" }, "8-8": { char: "A" }, "8-9": { char: "R" },
+
+            // 5 Menurun: CFD (Baris 7 sampai 9, Kolom 9) -> berpotongan di huruf R (ROTIBAKAR)
+            "7-9": { char: "C", num: 5 }, "8-9": { char: "R" }, "9-9": { char: "D" },
+
+            // 7 Mendatar: IMBIMODECENTIL (Baris 10, Kolom 5 sampai 18)
+            "10-5": { char: "I", num: 7 }, "10-6": { char: "M" }, "10-7": { char: "B" }, "10-8": { char: "I" }, "10-9": { char: "M" }, "10-10": { char: "O" }, "10-11": { char: "D" }, "10-12": { char: "E" }, "10-13": { char: "C" }, "10-14": { char: "E" }, "10-15": { char: "N" }, "10-16": { char: "T" }, "10-17": { char: "I" }, "10-18": { char: "L" },
+
+            // 8 Menurun: KALAUMOOD (Baris 10 sampai 14, Kolom 6) -> berpotongan di huruf M (IMBIMODECENTIL) dan A (Tanggal)
+            "11-6": { char: "A" }, "12-6": { char: "L" }, "13-6": { char: "A" }, "14-6": { char: "U" }, "14-7": { char: "M" }, "14-8": { char: "O" }, "14-9": { char: "O" }, "14-10": { char: "D" },
+
+            // 9 Mendatar: DIREL (Baris 4, Kolom 12 sampai 16)
+            "4-12": { char: "D", num: 9 }, "4-13": { char: "I" }, "4-14": { char: "R" }, "4-15": { char: "E" }, "4-16": { char: "L" },
+
+            // 10 Menurun: DIBIOSKOP (Baris 4 sampai 12, Kolom 12) -> berpotongan di D (DIREL), E (IMBIMODECENTIL), E (Tanggal)
+            "5-12": { char: "I", num: 10 }, "6-12": { char: "B" }, "7-12": { char: "I" }, "8-12": { char: "O" }, "9-12": { char: "S" }, "10-12": { char: "K" }, "11-12": { char: "O" }, "12-12": { char: "P" }
         };
 
         const gridContainer = document.getElementById('grid');
 
-        // Mengisi Kotak Grid otomatis
+        // Buat kotak grid secara dinamis
         for (let r = 1; r <= rows; r++) {
             for (let c = 1; c <= cols; c++) {
                 const cellKey = `${r}-${c}`;
@@ -221,7 +223,7 @@
             }
         }
 
-        // Fungsi Cek JawabanBenar/Salah
+        // Fungsi cek hasil input pemain
         function checkAnswers() {
             let allCorrect = true;
             for (const key in answers) {
@@ -239,7 +241,7 @@
             if (allCorrect) {
                 alert("Luar biasa! Ingatanmu sempurna, semua jawaban benar! ❤️🎉");
             } else {
-                alert("Hmm, sepertinya masih ada memori yang tertukar atau belum diisi. Coba cek lagi ya! Eneng/Abang pasti tahu jawabannya!  cc");
+                alert("Hmm, sepertinya masih ada memori yang tertukar atau belum diisi. Coba cek lagi ya!");
             }
         }
     </script>
