@@ -1,268 +1,247 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Imbi ❤️</title><!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <title>TTS Spesial Kita</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; }
+        p.subtitle { color: #7f8c8d; margin-top: 0; margin-bottom: 20px; text-align: center; }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 10px;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        /* Grid TTS 16x16 */
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 32px);
+            grid-template-rows: repeat(16, 32px);
+            gap: 1px;
+            background-color: #34495e;
+            padding: 2px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .cell {
+            background-color: #1a252f; /* Kotak hitam/mati */
+            position: relative;
+            width: 32px;
+            height: 32px;
+        }
+        .cell.white {
+            background-color: #ffffff;
+        }
+        .cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: transparent;
+            color: #2c3e50;
+        }
+        .cell input:focus {
+            background-color: #d6eaf8;
+            outline: none;
+        }
+        .cell-number {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: 9px;
+            color: #7f8c8d;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Panel Pertanyaan */
+        .clues-container {
+            flex: 1;
+            min-width: 320px;
+            max-width: 450px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .clues-section { margin-bottom: 20px; }
+        .clues-section h3 {
+            margin-top: 0;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 6px;
+            color: #2980b9;
+            font-size: 18px;
+        }
+        ol { padding-left: 20px; margin: 0; }
+        li { margin-bottom: 10px; color: #34495e; font-size: 14px; line-height: 1.4; }
+        
+        /* Tombol Aksi */
+        .btn-check {
+            margin-top: 25px;
+            padding: 12px 40px;
+            font-size: 16px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-check:hover { 
+            background-color: #27ae60; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(46, 204, 113, 0.3);
+        }
+        .correct { background-color: #2ecc71 !important; color: white !important; }
+    </style>
+</head>
+<body>
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <h1>Teka-Teki Silang Spesial ✨</h1>
+    <p class="subtitle">Uji seberapa kuat ingatanmu tentang momen-momen kita!</p>
+    
+    <div class="container">
+        <!-- Grid Ruang TTS -->
+        <div class="crossword-grid" id="grid"></div>
 
-<link rel="stylesheet" href="style.css">
-
-</head><body class="overflow-hidden"><!-- MUSIK --><audio id="bgMusic" loop>
-    <source src="assets/bgmusic.mp3" type="audio/mpeg">
-</audio><button id="muteBtn">
-    🔊
-</button><!-- HUJAN BUNGA --><div id="flowerRain"></div><!-- ================================================= --><!-- SCENE 1 : KADO --><!-- ================================================= --><section id="giftScene" class="scene active"><div class="text-center">
-
-    <h1 class="gift-title">
-        Ada sesuatu untuk Imbi ❤️
-    </h1>
-
-    <p class="gift-subtitle">
-        Klik kadonya ya sayang
-    </p>
-
-    <div id="giftBox" class="gift-box">
-        🎁
-    </div>
-
-</div>
-
-</section><!-- ================================================= --><!-- SCENE 2 : PIN --><!-- ================================================= --><section id="pinScene" class="scene hidden"><div class="pin-container">
-
-    <h2 class="pin-title">
-        Hayo kodenya apa ya 🤭
-    </h2>
-
-    <input
-        id="pinInput"
-        type="password"
-        maxlength="6"
-        placeholder="______"
-        class="pin-input"
-    >
-
-    <button id="checkPinBtn" class="pink-btn">
-        Masuk
-    </button>
-
-    <p id="pinMessage"></p>
-
-</div>
-
-</section><!-- ================================================= --><!-- SCENE 3 : ORBIT --><!-- ================================================= --><section id="orbitScene" class="scene hidden"><div class="orbit-wrapper">
-
-    <p class="memory-label">
-        MEMORI DnA
-    </p>
-
-    <h1 class="memory-title">
-        Kenangan Dewa n Imbi
-    </h1>
-
-    <p class="memory-subtitle">
-        Pencet setiap kenangan nya satu persatu ya sayang ❤️
-    </p>
-
-    <!-- INTI HATI -->
-
-    <div id="heartCore">
-
-        <div class="heart-glow"></div>
-
-        <div class="heart-content">
-
-            <h2>❤️</h2>
-
-            <p>
-                Inti Hati
-            </p>
-
+        <!-- Daftar Pertanyaan -->
+        <div class="clues-container">
+            <div class="clues-section">
+                <h3>Mendatar</h3>
+                <ol>
+                    <li value="1">Siapa nama emak Aku?</li>
+                    <li value="2">Apa bekal yang kedua aku kasih ke kamu?</li>
+                    <li value="4">Apa makanan yang pertama kali aku beli di cfd bareng kamu? (2 kata, tanpa spasi)</li>
+                    <li value="7">Apa yang paling dewa suka dari imbi? (3 kata, tanpa spasi)</li>
+                    <li value="9">Di mana pertama kali aku gandeng kamu? (2 kata, tanpa spasi)</li>
+                </ol>
+            </div>
+            <div class="clues-section">
+                <h3>Menurun</h3>
+                <ol>
+                    <li value="3">Kapan pertama kali aku DM kamu? (7 kata tulisan semua, tanpa spasi)</li>
+                    <li value="5">Di mana tempat pertama kali kita fotbar, Bukan berdua ya pertama kali kita satu frame dan samping-sampingan?</li>
+                    <li value="6">Berapa lama durasi kita pertama kali teleponan? (2 kata tulisan semua, tanpa spasi)</li>
+                    <li value="8">Kapan setiap kali Imbi mode centil? (2 kata, tanpa spasi)</li>
+                    <li value="10">Di mana pertama kali kita saling senderan? (2 kata, tanpa spasi)</li>
+                </ol>
+            </div>
         </div>
-
     </div>
 
-    <!-- ORBIT ITEMS -->
+    <button class="btn-check" onclick="checkAnswers()">Periksa Jawaban</button>
 
-    <div class="orbit orbit1">
-        <button class="memory-item" data-target="photo1">
-            📸 Foto 1
-        </button>
-    </div>
+    <script>
+        const rows = 16;
+        const cols = 16;
 
-    <div class="orbit orbit2">
-        <button class="memory-item" data-target="photo2">
-            📸 Foto 2
-        </button>
-    </div>
+        // Struktur jawaban dan penempatan koordinat pada Grid (Baris - Kolom)
+        const answers = {
+            // 1 Mendatar: DALIMA (Baris 2, Kolom 1-6)
+            "2-1": { char: "D", num: 1 }, "2-2": { char: "A" }, "2-3": { char: "L" }, "2-4": { char: "I" }, "2-5": { char: "M" }, "2-6": { char: "A" },
+            
+            // 2 Mendatar: ROTI (Baris 5, Kolom 1-4)
+            "5-1": { char: "R", num: 2 }, "5-2": { char: "O" }, "5-3": { char: "T" }, "5-4": { char: "I" },
+            
+            // 3 Menurun: DUADELAPANFEBRUARIDUARIBUDUAlIMA (Baris 1-16, Kolom 4) -> Berpotongan dengan DALIMA(I), ROTI(I)
+            "1-4": { char: "D", num: 3 }, "3-4": { char: "A" }, "4-4": { char: "E" }, "6-4": { char: "L" }, "7-4": { char: "A" }, "8-4": { char: "P" }, "9-4": { char: "A" }, "10-4": { char: "N" }, "11-4": { char: "F" }, "12-4": { char: "E" }, "13-4": { char: "B" }, "14-4": { char: "R" }, "15-4": { char: "U" }, "16-4": { char: "A" },
+            // Sisa huruf dari jawaban No 3 menyambung mendatar karena keterbatasan panjang grid vertikal:
+            "16-5": { char: "R" }, "16-6": { char: "I" }, "16-7": { char: "D" }, "16-8": { char: "U" }, "16-9": { char: "A" }, "16-10": { char: "R" }, "16-11": { char: "I" }, "16-12": { char: "B" }, "16-13": { char: "U" }, "16-14": { char: "D" }, "16-15": { char: "U" }, "16-16": { char: "A" }, "15-16": { char: "L" }, "14-16": { char: "I" }, "13-16": { char: "M" }, "12-16": { char: "A" },
 
-    <div class="orbit orbit3">
-        <button class="memory-item" data-target="photo3">
-            📸 Foto 3
-        </button>
-    </div>
+            // 4 Mendatar: ROTIBAKAR (Baris 8, Kolom 1-9) -> Berpotongan dengan DUADELAPAN...(P)
+            "8-1": { char: "R", num: 4 }, "8-2": { char: "O" }, "8-3": { char: "T" }, "8-5": { char: "A" }, "8-6": { char: "B" }, "8-7": { char: "A" }, "8-8": { char: "K" }, "8-9": { char: "A" }, "8-10": { char: "R" },
+            
+            // 5 Menurun: CFD (Baris 7-9, Kolom 9) -> Berpotongan dengan ROTIBAKAR(A)
+            "7-9": { char: "C", num: 5 }, "9-9": { char: "D" },
+            
+            // 6 Menurun: DUABELAS (Baris 2-9, Kolom 2) -> Berpotongan dengan DALIMA(A), ROTI(O), ROTIBAKAR(O)
+            "3-2": { char: "U" }, "4-2": { char: "A" }, "6-2": { char: "B" }, "7-2": { char: "E" }, "9-2": { char: "L" }, "10-2": { char: "A" }, "11-2": { char: "S" },
+            
+            // 7 Mendatar: IMBIMODECENTIL (Baris 11, Kolom 2-15) -> Berpotongan dengan DUABELAS(S)
+            "11-3": { char: "I", num: 7 }, "11-4": { char: "M" }, "11-5": { char: "B" }, "11-6": { char: "I" }, "11-7": { char: "M" }, "11-8": { char: "O" }, "11-9": { char: "D" }, "11-10": { char: "E" }, "11-11": { char: "C" }, "11-12": { char: "E" }, "11-13": { char: "N" }, "11-14": { char: "T" }, "11-15": { char: "I" }, "11-16": { char: "L" },
+            
+            // 8 Menurun: KALAUMOOD (Baris 11-15, Kolom 7) -> Berpotongan dengan IMBIMODECENTIL(M)
+            "12-7": { char: "A" }, "13-7": { char: "L" }, "14-7": { char: "A" }, "15-7": { char: "U" }, "15-8": { char: "M" }, "15-9": { char: "O" }, "15-10": { char: "O" }, "15-11": { char: "D" },
+            
+            // 9 Mendatar: DIREL (Baris 13, Kolom 11-15) -> Berpotongan dengan KALAUMOOD ujung belakang D mendatar ke kanan
+            "13-11": { char: "D", num: 9 }, "13-12": { char: "I" }, "13-13": { char: "R" }, "13-14": { char: "E" }, "13-15": { char: "L" },
+            
+            // 10 Menurun: DIBIOSKOP (Baris 5-13, Kolom 12) -> Berpotongan dengan IMBIMODECENTIL(E), DIREL(I)
+            "5-12": { char: "D", num: 10 }, "6-12": { char: "I" }, "7-12": { char: "B" }, "8-12": { char: "I" }, "9-12": { char: "O" }, "10-12": { char: "S" }, "12-12": { char: "K" }, "14-12": { char: "O" }, "15-12": { char: "P" }
+        };
 
-    <div class="orbit orbit4">
-        <button class="memory-item" data-target="photo4">
-            📸 Foto 4
-        </button>
-    </div>
+        const gridContainer = document.getElementById('grid');
 
-    <div class="orbit orbit5">
-        <button class="memory-item" data-target="photo5">
-            📸 Foto 5
-        </button>
-    </div>
+        // Mengisi Kotak Grid otomatis
+        for (let r = 1; r <= rows; r++) {
+            for (let c = 1; c <= cols; c++) {
+                const cellKey = `${r}-${c}`;
+                const cellDiv = document.createElement('div');
+                cellDiv.classList.add('cell');
 
-    <div class="orbit orbit6">
-        <button class="memory-item" data-target="letter">
-            💌 Surat
-        </button>
-    </div>
+                if (answers[cellKey]) {
+                    cellDiv.classList.add('white');
+                    
+                    if (answers[cellKey].num) {
+                        const numSpan = document.createElement('span');
+                        numSpan.classList.add('cell-number');
+                        numSpan.innerText = answers[cellKey].num;
+                        cellDiv.appendChild(numSpan);
+                    }
 
-    <div class="orbit orbit7">
-        <button class="memory-item" data-target="song">
-            🎵 Lagu Kita
-        </button>
-    </div>
+                    const input = document.createElement('input');
+                    input.setAttribute('maxlength', '1');
+                    input.setAttribute('id', `input-${cellKey}`);
+                    cellDiv.appendChild(input);
+                }
 
-    <div class="orbit orbit8">
-        <button class="memory-item" data-target="favorite">
-            🌸 Favorit
-        </button>
-    </div>
+                gridContainer.appendChild(cellDiv);
+            }
+        }
 
-</div>
+        // Fungsi Cek JawabanBenar/Salah
+        function checkAnswers() {
+            let allCorrect = true;
+            for (const key in answers) {
+                const inputEl = document.getElementById(`input-${key}`);
+                if (inputEl) {
+                    if (inputEl.value.toUpperCase() === answers[key].char) {
+                        inputEl.classList.add('correct');
+                    } else {
+                        inputEl.classList.remove('correct');
+                        allCorrect = false;
+                    }
+                }
+            }
 
-</section><!-- ================================================= --><!-- MODAL --><!-- ================================================= --><div id="modal" class="hidden"><div class="modal-content">
-
-    <button id="closeModal" class="close-btn">
-        ✖
-    </button>
-
-    <div id="modalBody"></div>
-
-</div>
-
-</div><!-- ================================================= --><!-- BOUQUET --><!-- ================================================= --><section id="bouquetScene" class="scene hidden"><div class="bouquet-container">
-
-    <div class="bouquet-flowers">
-        🌸 🌷 🌹 🌸 🌷 🌹 🌸
-    </div>
-
-    <h1 class="bouquet-title">
-        Thank You For Staying
-    </h1>
-
-    <p class="bouquet-subtitle">
-        Terimakasih karena tetap ada sayang ❤️
-    </p>
-
-    <button id="loveBtn" class="pink-btn">
-        Aku Sayang Kamu ❤️
-    </button>
-
-    <h2 id="foreverText" class="hidden">
-        Forever Us ❤️
-    </h2>
-
-</div>
-
-</section><!-- ================================================= --><!-- TEMPLATE KENANGAN --><!-- ================================================= --><div id="memoryTemplates" class="hidden"><template id="photo1">
-
-    <img src="assets/foto1.jpg" class="memory-photo">
-
-    <p>
-        Kalo kamu meluk atau ngelakuin sesuatu ke bunga yang aku kasih
-        aku ngerasa kaya aku yang dipeluk deh wkwkwkwk.
-        Bunga kamu wangii bangett makasih yaa udah ngasih aku segala hwhe.
-        Kamu effort bangett dehh aku sukakkk ❤️
-    </p>
-
-</template>
-
-<template id="photo2">
-
-    <img src="assets/foto2.jpg" class="memory-photo">
-
-    <p>
-        Liat gaa yang kemarin kita fotbar?
-        Pertama kali loh itu kita wkwkwkwk.
-        Kenapa aku nembak nya pas akhir yaa wkwkwk.
-        Kangenn dehh ❤️
-    </p>
-
-</template>
-
-<template id="photo3">
-
-    <img src="assets/foto3.jpg" class="memory-photo">
-
-    <p>
-        Ini foto kamu yang paling LUCUKKK GEMESHH BANGETT.
-        Aku salting pas kamu kirim ke akuu tauu gasiee ❤️
-    </p>
-
-</template>
-
-<template id="photo4">
-
-    <img src="assets/foto4.jpg" class="memory-photo">
-
-    <p>
-        Inget gaa kejadian aku nembak kamu?
-        Makasihh yakkk semoga kita sama sama teruss ❤️
-    </p>
-
-</template>
-
-<template id="photo5">
-
-    <img src="assets/foto5.jpg" class="memory-photo">
-
-    <p>
-        Liatt seng anak anak kita nungguin lohh dirumahh.
-        Udah punya 5 anak ajaa yaa 🤣❤️
-    </p>
-
-</template>
-
-<template id="letter">
-
-    <h2>💌 Untuk Imbi Sayang</h2>
-
-    <p>
-        Halo sayang.
-        Kamu jangan ngambek ya sama aku?
-        Wkwkwkwk capek tauu kalo kamu ngambek.
-        Ngambek nya jangan lama lama ya.
-        Maapin aku ya kadang kadang aku bikin kamu cemburu.
-        Aku pasti bakal kangen banget sama kamu seng disono.
-        Kamu juga disana sehat sehat yaa.
-        See u enjoy yaa seng ❤️
-    </p>
-
-</template>
-
-<template id="song">
-
-    <h2>🎵 Akad - Payung Teduh</h2>
-
-    <p>
-        Ini lagu kebangsaan kitaa ya seng ❤️
-    </p>
-
-    <a
-        href="https://open.spotify.com/"
-        target="_blank"
-        class="spotify-btn"
-    >
-        Buka Spotify
-    </a>
-
-</template>
-
-</div><script src="script.js"></script></body>
+            if (allCorrect) {
+                alert("Luar biasa! Ingatanmu sempurna, semua jawaban benar! ❤️🎉");
+            } else {
+                alert("Hmm, sepertinya masih ada memori yang tertukar atau belum diisi. Coba cek lagi ya! Eneng/Abang pasti tahu jawabannya!  cc");
+            }
+        }
+    </script>
+</body>
 </html>
